@@ -1,0 +1,44 @@
+/*
+    Document   : override
+    Created on : <date>
+    Author     : <author>
+    Description:
+        This is where any of your application specific styles should be included
+*/
+@font-face {
+    font-family: 'goldfinger';
+    src: url('fonts/GoldfingerKingdom.ttf');
+}
+
+.search-box {
+    margin-top: 10%;
+}
+
+.logoFont {
+    font-family: "goldfinger";
+    font-size: 8rem;
+    text-align: center;
+}
+
+.fullSize {
+    width: 100%;
+}
+
+.results-box {
+
+}
+
+.result-shown {
+    margin-top: 0;
+}
+
+.result-shown .logoFont {
+    font-size: 2rem;
+    text-align: left;
+}
+
+.result-shown .fullSize {
+    width: inherit;
+    margin-top: auto;
+    margin-bottom: auto;
+}
