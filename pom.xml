@@ -74,6 +74,20 @@
 			<version>${mysql.connector.version}</version>
 		</dependency>
 		
+		<!-- Jsoup -->
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>1.8.3</version>
+		</dependency>
+		
+		<!-- solrj -->
+		<dependency>
+			<groupId>org.apache.solr</groupId>
+			<artifactId>solr-solrj</artifactId>
+			<version>6.5.1</version>
+		</dependency>
+		
 	</dependencies>
 
 

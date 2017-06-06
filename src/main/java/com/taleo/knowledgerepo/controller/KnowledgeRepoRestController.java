@@ -12,41 +12,41 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.taleo.knowledgerepo.model.SearchResult;
+import com.taleo.knowledgerepo.service.KnowledgeRepoCrawlerExecService;
 import com.taleo.knowledgerepo.service.SearchResultService;
 
 @RestController
 public class KnowledgeRepoRestController {
 
 	@Autowired
-	SearchResultService userService;
+	SearchResultService searchService;
+	
+	@Autowired
+	KnowledgeRepoCrawlerExecService executorService;
 
 	@RequestMapping(value = "/searchResults/", method = RequestMethod.GET)
-	public ResponseEntity<List<SearchResult>> listAllUsers() {
-		List<SearchResult> users = userService.findAllSearchResults();
-		if (users.isEmpty()) {
+	public ResponseEntity<List<SearchResult>> fetchAllSearchResults() {
+		List<SearchResult> searchResults = searchService.findAllSearchResults();
+		if (searchResults.isEmpty()) {
 			return new ResponseEntity<List<SearchResult>>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<List<SearchResult>>(users, HttpStatus.OK);
+		return new ResponseEntity<List<SearchResult>>(searchResults, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/searchResults/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<SearchResult>> getUser(@RequestParam("pageId") int pageId,
+	@RequestMapping(value = "/searchResults", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<SearchResult>> fetchSeachResultsBy(@RequestParam("pageId") int pageId,
 			@RequestParam("keyword") String keyword) {
-		List<SearchResult> users = userService.findAllSearchResultsByKeyword(pageId, keyword);
-		if (users.isEmpty()) {
+		List<SearchResult> searchResults = searchService.findAllSearchResultsByKeyword(pageId, keyword);
+		if (searchResults.isEmpty()) {
 			return new ResponseEntity<List<SearchResult>>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<List<SearchResult>>(users, HttpStatus.OK);
+		return new ResponseEntity<List<SearchResult>>(searchResults, HttpStatus.OK);
 	}
-
-	/*
-	 * @RequestMapping(value = "/searchResults/{pageid}", method =
-	 * RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE) public
-	 * ResponseEntity<List<SearchResult>> getUser(@PathVariable("pageid") long
-	 * id) { List<SearchResult> users = userService.findAllSearchResults(); if
-	 * (users.isEmpty()) { return new
-	 * ResponseEntity<List<SearchResult>>(HttpStatus.NOT_FOUND); } return new
-	 * ResponseEntity<List<SearchResult>>(users, HttpStatus.OK); }
-	 */
+	
+	@RequestMapping(value = "/executeCrawler/", method = RequestMethod.GET)
+	public ResponseEntity<String> executeCrawler() {
+		executorService.execute();
+		return new ResponseEntity<String>(HttpStatus.OK);
+	}
 
 }

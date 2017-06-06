@@ -19,7 +19,7 @@ public class SearchResultDaoImpl extends AbstractDao<Integer, SearchResult> impl
 
 	@Override
 	public List<SearchResult> findAllSearchResults() {
-		Criteria criteria = createEntityCriteria().addOrder(Order.asc("title"));
+		Criteria criteria = createEntityCriteria().addOrder(Order.asc("id"));
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		List<SearchResult> searchResults = (List<SearchResult>) criteria.list();
 		return searchResults;
