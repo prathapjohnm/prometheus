@@ -25,4 +25,11 @@ public class SearchResultDaoImpl extends AbstractDao<Integer, SearchResult> impl
 		return searchResults;
 	}
 
+	@Override
+	public void save(SearchResult searchResult) {
+		persist(searchResult);
+	}
+	
+	
+
 }

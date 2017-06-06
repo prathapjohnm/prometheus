@@ -9,6 +9,8 @@ public interface SearchResultDao {
 	SearchResult findById(int id);
 		
 	List<SearchResult> findAllSearchResults();
+	
+	void save(SearchResult searchResult);
 
 }
 
