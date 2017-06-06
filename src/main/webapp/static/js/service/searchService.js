@@ -2,7 +2,7 @@
 
 angular.module('myApp').factory('SearchService', ['$http', '$q', function($http, $q){
 
-    var REST_SERVICE_URI = 'http://localhost:8080/KnowledgeRepo/searchResults/';
+    var REST_SERVICE_URI = 'http://localhost:8080/prometheus/searchResults/';
 
     var factory = {
         fetchAllSearchResults: fetchAllSearchResults

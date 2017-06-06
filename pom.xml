@@ -2,10 +2,10 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.websystique.springmvc</groupId>
-	<artifactId>KnowledgeRepo</artifactId>
+	<artifactId>prometheus</artifactId>
 	<packaging>war</packaging>
 	<version>1.0.0</version>
-	<name>KnowledgeRepo Maven Webapp</name>
+	<name>prometheus Maven Webapp</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -94,11 +94,11 @@
 				<version>2.4</version>
 				<configuration>
 					<warSourceDirectory>src/main/webapp</warSourceDirectory>
-					<warName>KnowledgeRepo</warName>
+					<warName>prometheus</warName>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>
 			</plugin>
 		</plugins>
-		<finalName>KnowledgeRepo</finalName>
+		<finalName>prometheus</finalName>
 	</build>
 </project>

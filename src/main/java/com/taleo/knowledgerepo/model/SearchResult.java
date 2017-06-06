@@ -21,6 +21,11 @@ public class SearchResult implements Serializable {
 	private String description;
 
 	private String url;
+	
+	public SearchResult()
+	{
+		
+	}
 
 	public SearchResult(Integer id, String title, String description, String url) {
 		this.id = id;
