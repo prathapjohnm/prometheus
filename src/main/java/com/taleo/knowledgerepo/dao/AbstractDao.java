@@ -1,7 +1,6 @@
 package com.taleo.knowledgerepo.dao;
 
 import java.io.Serializable;
-
 import java.lang.reflect.ParameterizedType;
 
 import org.hibernate.Criteria;
@@ -10,17 +9,18 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public abstract class AbstractDao<PK extends Serializable, T> {
-	
+
 	private final Class<T> persistentClass;
-	
-	public AbstractDao(){
-		this.persistentClass =(Class<T>) ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[1];
+
+	public AbstractDao() {
+		this.persistentClass = (Class<T>) ((ParameterizedType) this.getClass().getGenericSuperclass())
+				.getActualTypeArguments()[1];
 	}
-	
+
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	protected Session getSession(){
+	protected Session getSession() {
 		return sessionFactory.getCurrentSession();
 	}
 
@@ -28,12 +28,16 @@ public abstract class AbstractDao<PK extends Serializable, T> {
 		return (T) getSession().get(persistentClass, key);
 	}
 
-	protected Criteria createEntityCriteria(){
+	protected Criteria createEntityCriteria() {
 		return getSession().createCriteria(persistentClass);
 	}
-	
+
 	public void persist(T entity) {
 		getSession().persist(entity);
+	}
+
+	public void updateEntity(T entity){
+		getSession().saveOrUpdate(entity);
 	}
 
 }
