@@ -1,23 +1,36 @@
-/*package com.taleo.knowledgerepo.searcher;
+package com.taleo.knowledgerepo.searcher;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Service;
 
+import com.taleo.knowledgerepo.indexer.IndexConstants;
+
+@Service
+@PropertySource(value = { "classpath:seedurls.properties" })
 public class SolrSearchService {
-	
-	public void doQuery(){
+
+	@Autowired
+	Environment env;
+
+	public List<Integer> doQuery(String params) {
+		List<Integer> solrDocResults = new ArrayList<Integer>();
 		SolrQuery query = new SolrQuery();
-		query.setQuery("sony digital camera");
-		query.addFilterQuery("cat:electronics","store:amazon.com");
-		query.setFields("id","price","merchant","cat","store");
-		query.setStart(0);
-		query.set("defType", "edismax");
+		query.setQuery("dockeywords:" + params);
+		query.setFields(IndexConstants.DOCID);
+		query.addSort(IndexConstants.DOCURL, SolrQuery.ORDER.asc);
 
 		QueryResponse response = null;
 		try {
@@ -29,18 +42,21 @@ public class SolrSearchService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if(response!=null){
+		if (response != null) {
 			SolrDocumentList results = response.getResults();
-			for (int i = 0; i < results.size(); ++i) {
-				System.out.println(results.get(i));
+			Object docId = null;
+			for (SolrDocument solrDocument : results) {
+				docId = solrDocument.getFieldValue(IndexConstants.DOCID);
+				if (docId != null) {
+					solrDocResults.add((Integer) docId);
+				}
 			}
 		}
-    }
 
+		return solrDocResults;
+	}
 
-	public SolrClient getSolrClient(){
-		return new HttpSolrClient.Builder("http://localhost:8983/solr/KRCORE/").build();
-		
+	public SolrClient getSolrClient() {
+		return new HttpSolrClient.Builder(env.getProperty("solrurl")).build();
 	}
 }
-*/

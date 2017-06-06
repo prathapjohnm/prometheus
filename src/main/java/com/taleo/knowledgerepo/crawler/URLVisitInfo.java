@@ -35,6 +35,11 @@ public class URLVisitInfo {
 			arURLToAvoid.add(urls);
 		}
 		
+		urlsToVisit = env.getRequiredProperty("toavoiddevforum").split(",");
+		for (String urls : urlsToVisit) {
+			arURLToAvoid.add(urls);
+		}
+		
 		//set max depth
 		MAX_DEPTH = Integer.parseInt(env.getRequiredProperty("maxdepth"));
 	}

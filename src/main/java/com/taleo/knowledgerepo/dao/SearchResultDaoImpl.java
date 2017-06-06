@@ -1,15 +1,19 @@
 package com.taleo.knowledgerepo.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.Criteria;
-import org.hibernate.criterion.Order;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.taleo.knowledgerepo.model.SearchResult;
+import com.taleo.knowledgerepo.searcher.SolrSearchService;
 
 @Repository("searchResultDao")
 public class SearchResultDaoImpl extends AbstractDao<Integer, SearchResult> implements SearchResultDao {
+
+	@Autowired
+	SolrSearchService solrSearchService;
 
 	public SearchResult findById(int id) {
 		SearchResult searchResult = getByKey(id);
@@ -18,10 +22,13 @@ public class SearchResultDaoImpl extends AbstractDao<Integer, SearchResult> impl
 	}
 
 	@Override
-	public List<SearchResult> findAllSearchResults() {
-		Criteria criteria = createEntityCriteria().addOrder(Order.asc("id"));
-		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-		List<SearchResult> searchResults = (List<SearchResult>) criteria.list();
+	public List<SearchResult> findAllSearchResults(String keyword) {
+		List<SearchResult> searchResults = new ArrayList<SearchResult>();
+		List<Integer> docIds = solrSearchService.doQuery(keyword);
+		for (Integer docId : docIds) {
+			searchResults.add(findById(docId));
+		}
+
 		return searchResults;
 	}
 
@@ -29,7 +36,5 @@ public class SearchResultDaoImpl extends AbstractDao<Integer, SearchResult> impl
 	public void save(SearchResult searchResult) {
 		persist(searchResult);
 	}
-	
-	
 
 }

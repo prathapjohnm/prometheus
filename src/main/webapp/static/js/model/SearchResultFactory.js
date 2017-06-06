@@ -41,8 +41,14 @@ define(['ojs/ojcore', '../config/ServiceEndpoints'], function (oj, services) {
             }.bind(this);
 
             var customPagingOptionsCallback = function (response) {
-
-            }.bind(this);
+            	return {
+            		'totalResults': response.searchResultInfo.totalCount,
+            	    'limit': this.fetchSize,
+            	    'count': response.searchResults.length,
+            	    'offset': (response.searchResultInfo.pageId - 1) * this.fetchSize,
+            	    'hasMore': response.searchResultInfo.pageId < (response.searchResultInfo.totalCount / this.fetchSize) + 1
+            	}
+            };
 
             var SearchResults = oj.Collection.extend({
                 url: services.SEARCH_SERVICE + '?keyword=' + keyword,

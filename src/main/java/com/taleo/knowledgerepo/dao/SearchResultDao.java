@@ -8,7 +8,7 @@ public interface SearchResultDao {
 
 	SearchResult findById(int id);
 		
-	List<SearchResult> findAllSearchResults();
+	List<SearchResult> findAllSearchResults(String keyword);
 	
 	void save(SearchResult searchResult);
 

@@ -6,13 +6,20 @@ import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.common.SolrInputDocument;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import com.taleo.knowledgerepo.indexer.IndexConstants;
 import com.taleo.knowledgerepo.indexer.model.IndexDoc;
 
 @Service
+@PropertySource(value = { "classpath:seedurls.properties" })
 public class SolrIndexService{
+	
+	@Autowired
+	Environment env;
 	
 	public void doIndexation(IndexDoc idxDoc){
 		SolrInputDocument solrDoc = getSolrInputDocument(idxDoc);
@@ -39,7 +46,6 @@ public class SolrIndexService{
 	}
 
 	public SolrClient getSolrClient(){
-		return new HttpSolrClient.Builder("http://blr00bqn:8983/solr/KRCORE/").build();
-		
+		return new HttpSolrClient.Builder(env.getProperty("solrurl")).build();
 	}
 }
