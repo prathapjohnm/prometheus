@@ -10,4 +10,8 @@ public interface SearchResultService {
 
 	List<SearchResult> findAllSearchResults();
 
+	List<SearchResult> findAllSearchResultsByKeyword(int pageId, String keyword);
+	
+	void save(SearchResult searchResult);
+
 }

@@ -24,4 +24,16 @@ public class SearchResultServiceImpl implements SearchResultService {
 		return dao.findById(id);
 	}
 
+	@Override
+	public List<SearchResult> findAllSearchResultsByKeyword(int pageId, String keyword) {
+		List<SearchResult> searchResults = findAllSearchResults();
+		
+		return searchResults;
+	}
+
+	@Override
+	public void save(SearchResult searchResult) {
+		dao.save(searchResult);
+	}
+
 }
