@@ -28,9 +28,8 @@ public class SolrSearchService {
 	public List<Integer> doQuery(String params) {
 		List<Integer> solrDocResults = new ArrayList<Integer>();
 		SolrQuery query = new SolrQuery();
-		query.setQuery("dockeywords:" + params + " doctitle:" + params + "^100");
+		query.setQuery("dockeywords:" + params + " doctitle:(" + params + ")^100");
 		query.setFields(IndexConstants.DOCID);
-		//query.addSort(IndexConstants.DOCURL, SolrQuery.ORDER.asc);
 
 		QueryResponse response = null;
 		try {
