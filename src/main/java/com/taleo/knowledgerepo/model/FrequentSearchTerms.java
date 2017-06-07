@@ -84,7 +84,7 @@ public class FrequentSearchTerms implements Serializable {
 	}
 	
 	public void incrementHitCount(){
-		this.hits = ++ hits;
+		++ hits;
 	}
 
 }

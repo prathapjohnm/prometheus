@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.taleo.knowledgerepo.dao.SearchResultDaoImpl;
 import com.taleo.knowledgerepo.model.SearchResult;
+import com.taleo.knowledgerepo.util.DocumentTransformationUtil;
 
 @Component
 @Transactional
@@ -27,7 +28,7 @@ public class SearchResultAssembler {
 		srcResult = new SearchResult();
 		srcResult.setUrl(uRL);
 		srcResult.setTitle(document.title());
-		srcResult.setDescription("Description of document");
+		srcResult.setDescription(DocumentTransformationUtil.getDescription(document));
 	}
 
 	private void saveSearchResult() {

@@ -41,6 +41,7 @@ public class SolrIndexService{
 	      doc.addField(IndexConstants.DOCURL,idxDoc.getDocurl());
 	      doc.addField(IndexConstants.DOCTYPE, idxDoc.getDoctype());
 	      doc.addField(IndexConstants.DOCKEYWORDS, idxDoc.getDockeywords());
+	      doc.addField(IndexConstants.DOCTITLE, idxDoc.getDocTitle());
 	      
 	      return doc;
 	}

@@ -13,6 +13,8 @@ public class IndexDoc {
 
 	private String dockeywords;
 
+	private String docTitle;
+
 	public Integer getDocid() {
 		return docid;
 	}
@@ -45,11 +47,20 @@ public class IndexDoc {
 		this.dockeywords = dockeywords;
 	}
 
-	public void initialize(String docurl, Integer docId, String doctype, String dockeywords) {
+	public void initialize(String docurl, Integer docId, String doctype, String dockeywords, String title) {
 		this.docurl = docurl;
 		this.docid = docId;
 		this.doctype = doctype;
 		this.dockeywords = dockeywords;
+		this.docTitle = title;
+	}
+
+	public String getDocTitle() {
+		return docTitle;
+	}
+
+	public void setDocTitle(String docTitle) {
+		this.docTitle = docTitle;
 	}
 
 }

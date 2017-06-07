@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.taleo.knowledgerepo.indexer.DocumentIndexer;
 import com.taleo.knowledgerepo.model.SearchResult;
+import com.taleo.knowledgerepo.util.DocumentTransformationUtil;
 
 import java.io.IOException;
 
@@ -58,7 +59,7 @@ public class KnowledgeRepoCrawler {
     }
 
 	private void sendDocForIndexation(Document document, String uRL, Integer iDocId) {
-		docIndexer.indexDocument(uRL, iDocId,"Page",document.select("body").text());
+		docIndexer.indexDocument(uRL, iDocId,"Page", DocumentTransformationUtil.getKeywordsForIndexer(document), document.title());
 	}
 	private Integer saveSearchResultEntity(Document document, String uRL) {
 		SearchResult srcResult = searchResultAssembler.assembleAndSave(document, uRL);

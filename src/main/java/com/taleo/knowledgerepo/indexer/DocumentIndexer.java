@@ -15,10 +15,10 @@ public class DocumentIndexer {
 	@Autowired
 	SolrIndexService idxSrv;
 
-	public void indexDocument(String URL, Integer docId, String docType, String docText) {
+	public void indexDocument(String URL, Integer docId, String docType, String docText, String title) {
 
 		// construct the info to index
-		idxDoc.initialize(URL, docId, docType, docText);
+		idxDoc.initialize(URL, docId, docType, docText, title);
 
 		idxSrv.doIndexation(idxDoc);
 
