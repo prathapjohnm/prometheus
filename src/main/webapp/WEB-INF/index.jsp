@@ -98,8 +98,8 @@ section to represent the appropriate content type.
                   chroming: 'half', menu: '#menu1'}">
                         </button>
                         <ul id='menu1' data-bind="ojComponent: {component: 'ojMenu'}" style="display:none">
-                            <li id="help"><a href="#">Help</a></li>
-                            <li id="about"><a href="#">About</a></li>
+                            <li id="help"><a href="#" data-bind="click: toolBarChange">Home</a></li>
+                            <li id="about"><a href="#" data-bind="click: toolBarChange">About</a></li>
                             <li id="out"><a href="#">Sign Out</a></li>
                         </ul>
                     </div>

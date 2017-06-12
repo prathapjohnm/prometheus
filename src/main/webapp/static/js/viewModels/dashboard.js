@@ -5,8 +5,8 @@
 /*
  * Your dashboard ViewModel code goes here
  */
-define(['ojs/ojcore', 'knockout', 'jquery', '../model/SearchResultFactory', 'ojs/ojknockout', 'ojs/ojselectcombobox', 'ojs/ojlistview'],
-    function (oj, ko, $, resultFactory) {
+define(['ojs/ojcore', 'knockout', 'jquery', '../model/SearchResultFactory', '../service/searchService', 'ojs/ojknockout', 'ojs/ojselectcombobox', 'ojs/ojlistview'],
+    function (oj, ko, $, resultFactory, searchService) {
 
         function DashboardViewModel() {
             this.value = ko.observable("");
@@ -16,6 +16,10 @@ define(['ojs/ojcore', 'knockout', 'jquery', '../model/SearchResultFactory', 'ojs
             this.smScreen = oj.ResponsiveKnockoutUtils.createMediaQueryObservable(smQuery);
             // Below are a subset of the ViewModel methods invoked by the ojModule binding
             // Please reference the ojModule jsDoc for additionaly available methods.
+
+            this.refreshOptions = function (optionContext) {
+                return searchService.fetchOptions(optionContext);
+            };
 
             this.keywordChanged = function (event, ui) {
                 if (ui.option === 'value')
@@ -27,6 +31,14 @@ define(['ojs/ojcore', 'knockout', 'jquery', '../model/SearchResultFactory', 'ojs
                         this.results(null);
                     }
             }.bind(this);
+
+            // this.highlightTerms = function (htmlText) {
+            //     var keywords = this.value()[0].split(' ');
+            //     for(var keyword in keywords) {
+            //         htmlText = htmlText.replaceAll(new RegExp(keywords[keyword], 'i'), "<b>" + keywords[keyword] + "</b>");
+            //     }
+            //     return htmlText;
+            // };
 
             /**
              * Optional ViewModel method invoked when this ViewModel is about to be

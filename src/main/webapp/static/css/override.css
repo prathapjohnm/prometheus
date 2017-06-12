@@ -16,8 +16,13 @@
 
 .logoFont {
     font-family: "goldfinger";
-    font-size: 8rem;
+    font-size: 6rem;
     text-align: center;
+}
+
+.logoFontSmall {
+    font-family: "goldfinger";
+    font-size: 4rem;
 }
 
 .fullSize {
@@ -33,12 +38,23 @@
 }
 
 .result-shown .logoFont {
-    font-size: 2rem;
+    font-size: 3rem;
     text-align: left;
+}
+
+@media (min-width:320px) and (max-width: 480px) {
+    .result-shown .logoFont {
+        font-size: 3rem;
+        text-align: center;
+    }
 }
 
 .result-shown .fullSize {
     width: inherit;
     margin-top: auto;
     margin-bottom: auto;
+}
+
+.about-text {
+    font-size: x-large;
 }

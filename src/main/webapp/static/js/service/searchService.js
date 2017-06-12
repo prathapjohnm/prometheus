@@ -1,28 +1,17 @@
-'use strict';
-
-angular.module('myApp').factory('SearchService', ['$http', '$q', function($http, $q){
-
-    var REST_SERVICE_URI = 'http://localhost:8080/prometheus/searchResults/';
-
-    var factory = {
-        fetchAllSearchResults: fetchAllSearchResults
-    };
-
-    return factory;
-
-    function fetchAllSearchResults() {
-        var deferred = $q.defer();
-        $http.get(REST_SERVICE_URI)
-            .then(
-            function (response) {
-                deferred.resolve(response.data);
-            },
-            function(errResponse){
-                console.error('Error while fetching Users');
-                deferred.reject(errResponse);
-            }
-        );
-        return deferred.promise;
+define(['../config/ServiceEndpoints'], function (service) {
+    function SearchService() {
+        this.fetchOptions = function (context) {
+            return $.ajax({
+                url: service.FREQUENT_SEARCH_TERMS
+            }).then(function (response) {
+                return response.map(function (element) {
+                    return {value: element.keyword, label: element.keyword};
+                }).filter(function (element) {
+                    return element.label.toLowerCase().indexOf(context.term.toLowerCase()) !== -1;
+                });
+            });
+        }
     }
 
-}]);
+    return new SearchService();
+});

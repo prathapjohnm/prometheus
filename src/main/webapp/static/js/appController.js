@@ -38,9 +38,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojknockout', 'ojs/ojarray
       // Close offcanvas on medium and larger screens
       self.mdScreen.subscribe(function() {oj.OffcanvasUtils.close(self.drawerParams);});
       self.drawerParams = {
-        displayMode: 'push',
+        displayMode: 'overlay',
         selector: '#navDrawer',
-        content: '#pageContent'
+        content: '#pageContent',
+        modality: 'modal'
       };
       // Called by navigation drawer toggle button and after selection of nav drawer item
       self.toggleDrawer = function() {
@@ -54,6 +55,15 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojknockout', 'ojs/ojarray
       self.appName = ko.observable("Prometheus");
       // User Info used in Global Navigation area
       self.userLogin = ko.observable("prometheus.user@oracle.com");
+
+      self.toolBarChange = function (data, event) {
+          console.log(event.target);
+          if (event.target.innerText === "About") {
+              self.router.go('about');
+          } else if (event.target.innerText === "Home") {
+              self.router.go('dashboard');
+          }
+      };
 
       // Footer
       function footerLink(name, id, linkTarget) {
