@@ -51,7 +51,7 @@ public class URLVisitInfo {
 			if (!arURLToAvoid.contains(strURL)) {
 				System.out.println("URL :" + strURL);
 			}
-			if (strURL.contains("oracle.com") && !arURLToAvoid.contains(strURL) && !strURL.endsWith("revisions")) {
+			if ( (strURL.contains("oracle.com") || strURL.contains("confluence.oraclecorp.com")) && !arURLToAvoid.contains(strURL) && !strURL.endsWith("revisions")) {
 				return true;
 			}
 		}

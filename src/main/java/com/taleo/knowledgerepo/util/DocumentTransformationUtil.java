@@ -21,6 +21,12 @@ public class DocumentTransformationUtil {
 			keyWords = keyWords.substring(keyWords.indexOf("guests online."));
 		}
 		keyWords = keyWords.replaceAll("guests online.", "").replaceAll("Home » Wiki", "");
+		
+		if(keyWords.indexOf(" Export to Word Pages ") != -1){
+			keyWords = keyWords.substring(keyWords.indexOf(" Export to Word Pages "));
+		}
+		
+		keyWords = keyWords.replaceAll(" Export to Word Pages ", "");
 
 		return keyWords;
 	}
