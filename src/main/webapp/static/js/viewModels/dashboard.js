@@ -10,7 +10,11 @@ define(['ojs/ojcore', 'knockout', 'jquery', '../model/SearchResultFactory', '../
 
         function DashboardViewModel() {
             this.value = ko.observable("");
+            this.resultCollection;
             this.results = ko.observable(null);
+            this.currentCount = ko.observable(0);
+            this.totalCount = ko.observable(0);
+            this.responseTime = ko.observable();
 
             var smQuery = oj.ResponsiveUtils.getFrameworkQuery(oj.ResponsiveUtils.FRAMEWORK_QUERY_KEY.SM_ONLY);
             this.smScreen = oj.ResponsiveKnockoutUtils.createMediaQueryObservable(smQuery);
@@ -25,20 +29,50 @@ define(['ojs/ojcore', 'knockout', 'jquery', '../model/SearchResultFactory', '../
                 if (ui.option === 'value')
                     if (this.value()[0]) {
                         //trigger search
-                        this.results(new oj.CollectionTableDataSource(resultFactory.createSearchResultCollection(this.value()[0])));
+                        var startTime = new Date().getTime();
+                        this.resultCollection = resultFactory.createSearchResultCollection(this.value()[0]);
+                        this.results(new oj.CollectionTableDataSource(this.resultCollection));
+
+                        this.resultCollection.on('request', function () {
+                            startTime = new Date().getTime();
+                        }.bind(this));
+
+                        this.resultCollection.on('ready', function (collection) {
+                            this.responseTime(new Date().getTime() - startTime);
+                            this.totalCount(collection.length);
+                            this.currentCount(collection.offset + collection.lastFetchCount);
+                        }.bind(this));
                     }
                     else {
                         this.results(null);
                     }
             }.bind(this);
 
-            // this.highlightTerms = function (htmlText) {
-            //     var keywords = this.value()[0].split(' ');
-            //     for(var keyword in keywords) {
-            //         htmlText = htmlText.replaceAll(new RegExp(keywords[keyword], 'i'), "<b>" + keywords[keyword] + "</b>");
-            //     }
-            //     return htmlText;
-            // };
+            this.highlightTerms = function (htmlText) {
+                if (this.value()[0]) {
+                    var initialText = htmlText;
+                    var outputText = "";
+                    var keywords = this.value()[0].split(' ');
+
+                    for (var key in keywords) {
+                        outputText = "";
+                        var keyword = keywords[key];
+                        do {
+                            var match = initialText.match(new RegExp(keyword, 'i'));
+                            if (match) {
+                                outputText += initialText.substring(0, match.index) + '<b>' + match[0] + '</b>';
+                                initialText = initialText.substring(match.index + keyword.length);
+                            } else {
+                                //end case no match but there was still content
+                                outputText += initialText;
+                                initialText = "";
+                            }
+                        } while (initialText.length > 0);
+                        initialText = outputText;
+                    }
+                    return outputText;
+                }
+            };
 
             /**
              * Optional ViewModel method invoked when this ViewModel is about to be

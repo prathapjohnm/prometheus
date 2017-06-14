@@ -14,6 +14,9 @@
                                               optionChange: keywordChanged, options: refreshOptions}"/>
         </div>
     </div>
+    <div class="search-title oj-padding-bottom" data-bind="visible: results">
+       <span data-bind="text: 'Showing ' + currentCount() + ' out of ' + totalCount() + ' results' + ' (' + responseTime()/1000 + ' seconds)'"></span>
+    </div>
     <div class="oj-flex" data-bind="visible: results">
         <ul id="listview" data-bind="ojComponent: {component: 'ojListView', data: results,
          item: {template: 'search-result-template'}, selectionMode: 'single',
@@ -32,7 +35,7 @@
             <span data-bind="text: PageURI"></span>
         </div>
         <div>
-            <span data-bind="text: Description"></span>
+            <span data-bind="html: $parent.highlightTerms(Description)"></span>
         </div>
     </div>
 </script>
